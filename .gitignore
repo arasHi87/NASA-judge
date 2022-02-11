@@ -1,0 +1,10 @@
+**/__pycache__/
+.vscode/
+.env
+.pytest_cache/
+.coverage
+
+# mac file
+.DS_Store
+.AppleDouble
+.LSOverride
