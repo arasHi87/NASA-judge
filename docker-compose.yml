@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  judge:
+    container_name: nasa-judge
+    build: .
+    image: nasa-judge:latest
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 8000:8000

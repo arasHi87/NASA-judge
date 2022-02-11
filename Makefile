@@ -7,6 +7,12 @@ init: clean
 	pipenv install --dev
 	pipenv run pre-commit install
 
+service_up:
+	docker-compose up -d
+
+service_down:
+	docker-compose down
+
 lint:
 	pipenv run flake8 ${PKG} --max-line-length=120
 	pipenv run pylint --rcfile=setup.cfg ${PKG}/**
