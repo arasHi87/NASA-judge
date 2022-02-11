@@ -24,7 +24,10 @@ format:
 	pipenv run black ${PKG}
 	pipenv run isort ${PKG}
 
-ci-bundle: analysis format lint
+test:
+	pipenv run pytest -vv --cov-report=term-missing --cov=api/endpoints api/tests
+
+ci-bundle: analysis format lint test
 
 clean:
 	find . -type f -name '*.py[co]' -delete
