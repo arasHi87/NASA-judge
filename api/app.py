@@ -18,7 +18,7 @@ API_ROUTER = APIRouter()
 # Logs incoming request information
 async def log_request(request: Request):
     logger.info(
-        f"[{request.client.host}:{request.client.host}] {request.method} {request.url}"
+        f"[{request.client.host}:{request.client.port}] {request.method} {request.url}"
     )
     logger.info(f"header: {request.headers}, body: ")
 
