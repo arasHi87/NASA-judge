@@ -13,8 +13,10 @@ class Result(BASE):
 
     __tablename__ = "results"
 
-    rid = Column(Integer, unique=True, primary_key=True, nullable=False)  # result id
-    uid = Column(Integer, nullable=False)  # user id
+    rid = Column(
+        Integer, unique=True, primary_key=True, nullable=False, autoincrement=True
+    )  # result id
+    uid = Column(VARCHAR, nullable=False)  # user id
     pid = Column(Integer, nullable=False)  # problem id
     score = Column(Integer, nullable=True)
     status = Column(
