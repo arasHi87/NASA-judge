@@ -10,3 +10,21 @@ services:
       - .env
     ports:
       - 8000:8000
+  
+  postgres:
+    image: postgres:11
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./sql/table.sql:/docker-entrypoint-initdb.d/table.sql
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    name: postgres_data
