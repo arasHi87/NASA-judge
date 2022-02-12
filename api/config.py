@@ -22,3 +22,5 @@ class Config:
     OPENAPI_URL = _getenv("OPENAPI_URL", "/openapi.json")
 
     DB_URL = _getenv("DB_URL", "postgresql://postgres:password@localhost:5432/database")
+
+    IDS = ["F74094716", "F85105827", "D12345678", "A09876543", "M93384675", "L56987412"]

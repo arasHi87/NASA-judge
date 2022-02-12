@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, FastAPI
 from fastapi.requests import Request
 from fastapi.responses import Response
 from loguru import logger
+from models import init_db
 
 APP = FastAPI(
     version=Config.VERSION,
@@ -17,16 +18,21 @@ API_ROUTER = APIRouter()
 # Logs incoming request information
 async def log_request(request: Request):
     logger.info(
-        f"[{request.client.host}:{request.client.host}] {request.method} {request.url}"
+        f"[{request.client.host}:{request.client.port}] {request.method} {request.url}"
     )
     logger.info(f"header: {request.headers}, body: ")
-    logger.info(await request.body())
+
+    if "content-type" in request.headers:
+        logger.info(await request.form())
+    else:
+        logger.info(await request.body())
 
 
 # Startup event
 @APP.on_event("startup")
 async def startup_event():
     logger.info("Processing startup initialization")
+    init_db()
 
 
 # Log response status code and body
