@@ -1,17 +1,17 @@
 import pytest
-from tests import AssertRequest, AssertResponse, assert_request
+from tests import APITestcase, AssertRequest, AssertResponse
 
 ROUTE = "/health"
 
-HEADERS = {}
+CASES = [
+    APITestcase(
+        "OK",
+        AssertRequest("GET", ROUTE, headers={}, payload={}),
+        AssertResponse("OK", 200),
+    )
+]
 
-PAYLOAD = {}
 
-INPUT = {"success": AssertRequest(HEADERS, PAYLOAD)}
-
-OUTPUT = {"success": AssertResponse("OK", 200)}
-
-
-@pytest.mark.parametrize("test_type", INPUT.keys())
-def test_get(test_type):
-    assert_request("GET", ROUTE, INPUT[test_type], OUTPUT[test_type])
+@pytest.mark.parametrize("case", CASES, ids=[case.name for case in CASES])
+def test(case: APITestcase):
+    case.run()

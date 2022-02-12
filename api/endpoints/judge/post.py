@@ -65,7 +65,7 @@ async def post(payload: Payload = Depends(Payload.as_form)):
         SESSION.add(Result(**{"uid": payload.uid, "pid": payload.pid, "score": 0}))
         SESSION.commit()
         return PlainTextResponse("OK", 200)
-    except Exception as error:
+    except Exception as error:  # pragma: no cover
         SESSION.rollback()
         logger.error(error)
         return PlainTextResponse("Internal Server Error", 500)
