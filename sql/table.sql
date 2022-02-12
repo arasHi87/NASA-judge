@@ -1,8 +1,8 @@
 CREATE TYPE mood AS ENUM ('pending', 'evaluating', 'done');
 
 CREATE TABLE IF NOT EXISTS results(
-    rid INTEGER PRIMARY KEY,
-    uid INTEGER NOT NULL,
+    rid SERIAL PRIMARY KEY,
+    uid VARCHAR NOT NULL,
     pid INTEGER NOT NULL,
     score INTEGER NOT NULL,
     status mood DEFAULT 'pending' NOT NULL
