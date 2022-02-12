@@ -2,6 +2,8 @@
 
 A RESTful API service for NASA judge, use to build docker container and score.
 
+![Integration](https://github.com/DarkbordermanTemplate/fastapi/workflows/Integration/badge.svg)
+
 ## Development
 
 ### Prerequisite

@@ -3,7 +3,7 @@ PKG = api
 .PHONY: clean init
 
 init: clean
-	pipenv --python 3.7
+	pipenv --python 3.8
 	pipenv install --dev
 	pipenv run pre-commit install
 
