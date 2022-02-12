@@ -21,7 +21,11 @@ async def log_request(request: Request):
         f"[{request.client.host}:{request.client.host}] {request.method} {request.url}"
     )
     logger.info(f"header: {request.headers}, body: ")
-    logger.info(await request.body())
+
+    if "content-type" in request.headers:
+        logger.info(await request.form())
+    else:
+        logger.info(await request.body())
 
 
 # Startup event
