@@ -8,10 +8,10 @@ init: clean
 	pipenv run pre-commit install
 
 service_up:
-	docker-compose up -d
+	docker-compose up -d postgres
 
 service_down:
-	docker-compose down
+	docker-compose down && docker volume rm postgres_data 
 
 lint:
 	pipenv run flake8 ${PKG} --max-line-length=120
