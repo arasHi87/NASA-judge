@@ -5,6 +5,7 @@ from loguru import logger
 from models import Result, User
 # pylint: disable=E0611
 from pydantic import BaseModel
+from utils import FileManager
 
 
 class Payload(BaseModel):
@@ -24,10 +25,15 @@ class Payload(BaseModel):
         return cls(uid=uid, pid=pid, token=token, file=file)
 
 
+FILEMANAGER = FileManager()
 DOC = {
     200: {
         "description": "API response successfully",
         "content": {"text/plain": {"example": "OK"}},
+    },
+    400: {
+        "description": "File type not match",
+        "content": {"text/plain": {"example": "Invalid file type"}},
     },
     401: {
         "description": "Username or token not match",
@@ -45,8 +51,15 @@ async def post(payload: Payload = Depends(Payload.as_form)):
         user = (
             SESSION.query(User).filter_by(uid=payload.uid, token=payload.token).first()
         )
+
         if not user:
             return PlainTextResponse("Unauthorized", 401)
+
+        if payload.file.content_type != "application/zip":
+            return PlainTextResponse("Invalid file type", 400)
+
+        # write file into user folder and extract
+        await FILEMANAGER.accept_file(payload.file, payload.uid)
 
         # need check if problem id match later
         SESSION.add(Result(**{"uid": payload.uid, "pid": payload.pid, "score": 0}))
